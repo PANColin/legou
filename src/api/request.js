@@ -2,7 +2,7 @@ import axios from "axios";
 import qs from "qs";
 import { Toast } from "vant";
 var instance = axios.create({
-  baseURL: "http://shop.bufantec.com/bufan",
+  baseURL: "https://shop.bufantec.com/bufan",
   timeout: 5000,
 });
 var toast;
