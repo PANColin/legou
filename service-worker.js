@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "precache-manifest.7f5da7b39be6fd914b4f2f77f8009b63.js"
+  "precache-manifest.94aebcb2ba80fd7d1cfe29450ad24e80.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "tabbar-demo"});
