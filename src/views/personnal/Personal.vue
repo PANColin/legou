@@ -80,7 +80,7 @@ export default {
   },
 
   mounted() {
-    this.avatarUrl = JSON.parse(localStorage.getItem("userInfo")).avatarUrl;
+    this.avatarUrl = JSON.parse(localStorage.getItem("userInfo"))?.avatarUrl;
   },
 
   methods: {},

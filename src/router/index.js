@@ -231,7 +231,8 @@ const router = new VueRouter({
 var toast;
 router.beforeEach(async (to, from, next) => {
   const user = JSON.parse(localStorage.getItem("userInfo") || "{}");
-  if (!user.name) {
+  if (!user.openId) {
+    console.log(user,'===============');
     next();
     if (to.path === "/login") return;
     new Promise((resolve, reject) => {
@@ -260,7 +261,7 @@ router.beforeEach(async (to, from, next) => {
       }, 1000);
     }).then((res) => {
       res({ name: "Login" });
-      console.log(res);
+      // console.log(res);
       // router.push({ path: "/login" });
     });
   } else {
