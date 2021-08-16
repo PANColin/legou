@@ -1,19 +1,27 @@
 import axios from "axios";
+import { reject, resolve } from "q";
 import qs from "qs";
 import { Toast } from "vant";
+// import router from "../router/index";
 var instance = axios.create({
   baseURL: "http://shop.bufantec.com/bufan",
   timeout: 5000,
 });
 var toast;
+// let timer = null;
 instance.interceptors.request.use(
   (config) => {
     // console.log(config);
-    toast = Toast.loading({
-      message: "加载中...",
-      duration: 0,
-      forbidClick: true,
-    });
+    const user = JSON.parse(localStorage.getItem("userInfo") || "{}");
+    if (user.name) {
+      toast = Toast.loading({
+        message: "加载中...",
+        duration: 0,
+        forbidClick: true,
+      });
+    }
+    console.log(user);
+
     if (config.method.toLocaleLowerCase() == "get") {
       // 参数统一
       config.params = config.data;

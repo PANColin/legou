@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import { Toast } from "vant";
 
 Vue.use(VueRouter);
 const Home = () => import("@/views/home/Home.vue");
@@ -221,11 +222,52 @@ const routes = [
 const router = new VueRouter({
   routes,
 });
-router.beforeEach((to, from, next) => {
-  // console.log({ to, from, next });
-  document.title = to.meta.title;
-  to.query.fromRouter = from.path;
-  next();
+// router.beforeEach((to, from, next) => {
+//   // console.log({ to, from, next });
+//   document.title = to.meta.title;
+//   to.query.fromRouter = from.path;
+//   next();
+// });
+var toast;
+router.beforeEach(async (to, from, next) => {
+  const user = JSON.parse(localStorage.getItem("userInfo") || "{}");
+  if (!user.name) {
+    next();
+    if (to.path === "/login") return;
+    new Promise((resolve, reject) => {
+      let second = 3;
+      toast = Toast.loading({
+        duration: 0, // 持续展示 toast
+        forbidClick: true,
+        message: `对不起，您还没有登录,倒计时  ${second} 秒跳转到登录页面`,
+      });
+
+      const timer = setInterval(() => {
+        second--;
+        if (second >= 0) {
+          console.log(second);
+          console.log(toast);
+          toast.message = `倒计时  ${second} 秒跳转到登录页面`;
+          // toast.duration = second * 1000;
+        } else {
+          // const nextFun = next({ path: "/login" });
+          resolve(next);
+          clearInterval(timer);
+          console.log(second);
+          // 手动清除 Toast
+          Toast.clear();
+        }
+      }, 1000);
+    }).then((res) => {
+      res({ name: "Login" });
+      console.log(res);
+      // router.push({ path: "/login" });
+    });
+  } else {
+    document.title = to.meta.title;
+    to.query.fromRouter = from.path;
+    next();
+  }
 });
 
 export default router;

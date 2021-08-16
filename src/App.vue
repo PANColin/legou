@@ -4,6 +4,7 @@
     <!-- <transition name="van-fade"></transition> -->
 
     <!-- 需要缓存的页面展示 -->
+    <!-- <router-link to="/login">登录</router-link> -->
     <keep-alive>
       <router-view v-if="$route.meta.keepActive" />
     </keep-alive>
